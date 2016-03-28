@@ -60,47 +60,47 @@ namespace dima {
 		/*!
 		 * \return the numerator of this rational number
 		 */ 
-		unsigned getNumerator();
+		unsigned getNumerator() const;
 		//! Returns the denominator
 		/*!
 		 * \return the denominator of this rational number
 		 */ 
-		unsigned getDenominator();
+		unsigned getDenominator() const;
 		
 		//! Addition between two rational numbers
 		/*!
 		 * \param rhs right hand side of the Operation
 		 * \return the result of this+rhs
 		 */
-		rational operator+(const rational& rhs);
+		rational operator+(const rational& rhs) const;
 		//! Subtraction between two rational numbers
 		/*!
 		 * \param rhs right hand side of the Operation
 		 * \return the result of this-rhs
 		 */
-		rational operator-(const rational& rhs);
+		rational operator-(const rational& rhs) const;
 		//! Multiplication between two rational numbers
 		/*!
 		 * \param rhs right hand side of the Operation
 		 * \return the result of this*rhs
 		 */
-		rational operator*(const rational& rhs);
+		rational operator*(const rational& rhs) const;
 		//! Division between two rational numbers
 		/*!
 		 * \param rhs right hand side of the Operation. Throws an std::overflow_error if rhs is zero
 		 * \return the result of this/rhs
 		 */
-		rational operator/(const rational& rhs);
+		rational operator/(const rational& rhs) const;
 		//! Unary + operator. Returns this rational number
 		/*!
 		 * \return *this
 		 */ 
-		rational operator+();
+		rational operator+() const;
 		//! Unary + operator. Returns the additive inverse 
 		/*!
 		 * \return the additive inverse of *this
 		 */ 
-		rational operator-();
+		rational operator-() const;
 		//! Prefix increment operator
 		rational& operator++();
 		//! Prefix decrement operator
@@ -139,37 +139,37 @@ namespace dima {
 		 * \param rhs right hand side of the comparison
 		 * \return true if *this and rhs are equal (as rational numbers), false otherwise
 		 */
-		bool operator==(const rational& rhs);
+		bool operator==(const rational& rhs) const;
 		//! Comparison operator
 		/*!
 		 * \param rhs right hand side of the comparison
 		 * \return true if *this and rhs are unequal (as rational numbers), false otherwise
 		 */
-		bool operator!=(const rational& rhs);
+		bool operator!=(const rational& rhs) const;
 		//! Comparison operator
 		/*!
 		 * \param rhs right hand side of the comparison
 		 * \return true if *this is smaller as rhs, false otherwise
 		 */
-		bool operator<(const rational& rhs);
+		bool operator<(const rational& rhs) const;
 		//! Comparison operator
 		/*!
 		 * \param rhs true if *this is smaller as rhs, false otherwise
 		 * \return true if *this is smaller or equal as rhs, false otherwise
 		 */
-		bool operator<=(const rational& rhs);
+		bool operator<=(const rational& rhs) const;
 		//! Comparison operator
 		/*!
 		 * \param rhs right hand side of the comparison
 		 * \return true if *this is greater as rhs, false otherwise
 		 */
-		bool operator>(const rational& rhs);
+		bool operator>(const rational& rhs) const;
 		//! Comparison operator
 		/*!
 		 * \param rhs right hand side of the comparison
 		 * \return true if *this is greater or equal as rhs, false otherwise
 		 */
-		bool operator>=(const rational& rhs);
+		bool operator>=(const rational& rhs) const;
 		
 		//! Outputstream operator
 		/*!

@@ -24,7 +24,7 @@ namespace dima {
 		denominator /= g;
 	}
 	
-	rational rational::operator+(const rational& rhs) {
+	rational rational::operator+(const rational& rhs) const {
 		rational result;
 		result.denominator = this->denominator * rhs.denominator;
 		
@@ -41,49 +41,49 @@ namespace dima {
 		return result;
 	}
 	
-	rational rational::operator-(const rational& rhs) {
+	rational rational::operator-(const rational& rhs) const {
 		return (*this)+rational(!rhs.is_non_negative, rhs.numerator, rhs.denominator);
 	}
 	
-	rational rational::operator*(const rational& rhs) {
+	rational rational::operator*(const rational& rhs) const {
 		return rational(this->is_non_negative == rhs.is_non_negative, this->numerator*rhs.numerator, this->denominator*rhs.denominator);
 	}
 	
-	rational rational::operator/(const rational& rhs) {
+	rational rational::operator/(const rational& rhs) const {
 		if (rhs.numerator == 0) throw std::overflow_error("Overflow Error: Divison by Zero");
 		return (*this)*rational(rhs.is_non_negative, rhs.denominator, rhs.numerator);
 	}
 	
-	bool rational::operator==(const rational& rhs) {
+	bool rational::operator==(const rational& rhs) const {
 		return this->is_non_negative == rhs.is_non_negative && this->numerator == rhs.numerator && this->denominator == rhs.denominator;
 	}
 	
-	bool rational::operator!=(const rational& rhs) {
+	bool rational::operator!=(const rational& rhs) const {
 		return !(*this == rhs);
 	}
 	
-	bool rational::operator<(const rational& rhs) {
+	bool rational::operator<(const rational& rhs) const {
 		if(this->is_non_negative == rhs.is_non_negative) {
 			return this->is_non_negative ? this->numerator * rhs.denominator < rhs.numerator*(this->denominator) : this->numerator * rhs.denominator < rhs.numerator*(this->denominator);
 		}
 		return rhs.is_non_negative;
 	}
 	
-	bool rational::operator<=(const rational& rhs) {
+	bool rational::operator<=(const rational& rhs) const {
 		return *this == rhs || *this < rhs;
 	}
 	
-	bool rational::operator>(const rational& rhs) {
+	bool rational::operator>(const rational& rhs) const {
 		return !(*this < rhs || *this == rhs); 
 	}
 	
-	bool rational::operator>=(const rational& rhs) {
+	bool rational::operator>=(const rational& rhs) const {
 		return !(*this < rhs);
 	}
 	
-	rational rational::operator+() { return *this; }
+	rational rational::operator+() const { return *this; }
 	
-	rational rational::operator-() {
+	rational rational::operator-() const {
 		if (this->numerator == 0) return *this;
 		return rational(!this->is_non_negative, this->numerator, this->denominator);
 	}
@@ -148,9 +148,9 @@ namespace dima {
 		return result;
 	}
 	
-	unsigned rational::getNumerator() { return numerator; }
+	unsigned rational::getNumerator() const { return numerator; }
 	
-	unsigned rational::getDenominator() { return denominator; }
+	unsigned rational::getDenominator() const { return denominator; }
 	
 	std::ostream& operator<< (std::ostream& os, const rational r) {
 		if(r.denominator == 1) os<< (r.is_non_negative ? "" : "-") << r.numerator;
