@@ -1,5 +1,5 @@
 ##Welcome to dima on Github
-dima is at the moment a Collection of Mathmatical Structures in C++. The aim of this Project is to create a teaching Software for linear Algebra.
+dima is at the moment a Collection of Mathmatical Structures in C++. The aim of this Project is to create an educational Software for Linear Algebra.
 
 ##Current Status
 unstable. 
