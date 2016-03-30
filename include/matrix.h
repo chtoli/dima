@@ -13,7 +13,7 @@ namespace dima {
  public:
  	const size_t rows, columns;
  	
- 	matrix<T>() : rows(1), columns(1) {}
+ 	matrix<T>() : rows(1), columns(1) {mat.resize(1);}
  	//! Constructs a square zero matrix of size n x n;
  	matrix<T>(std::size_t n);
  	//! Constructs a zero matrix of size m x n;
