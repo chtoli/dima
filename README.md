@@ -6,3 +6,6 @@ unstable.
 
 ##Installation
 Simply call make to build the code. ./dima will run it.
+
+##Contributors
+Dennis Klein (sycx2), Christian Linz(chtoli)
