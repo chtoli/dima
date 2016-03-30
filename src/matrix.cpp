@@ -77,7 +77,7 @@ namespace {
  //multiplication
  template<typename T>
  matrix<T>& matrix<T>::operator*=(const matrix<T>& rhs) {
- 	if (columns != rhs.rows) throw dimensionerror("dimension does not match");
+ 	if (columns != rhs.rows) throw std::invalid_argument("Dimensions do not match");
  	if (columns < rhs.columns) {
  		//allocate more memory
  	}
