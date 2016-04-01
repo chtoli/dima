@@ -25,33 +25,27 @@ namespace dima {
 	}
 	
 	rational rational::operator+(const rational& rhs) const {
-		rational result;
-		result.denominator = this->denominator * rhs.denominator;
-		
-		if (this->is_non_negative == rhs.is_non_negative) {
-			result.is_non_negative = this->is_non_negative;
-			result.numerator = this->numerator*rhs.denominator+rhs.numerator*(this->denominator);
-		} else {
-			bool is_left_value_abs_larger = this->numerator*rhs.denominator > rhs.numerator*(this->denominator);
-			unsigned num = is_left_value_abs_larger ? this->numerator*rhs.denominator-rhs.numerator*(this->denominator) : -this->numerator*rhs.denominator+rhs.numerator*(this->denominator);
-			result.numerator = num;
-			result.is_non_negative = (is_left_value_abs_larger && this->is_non_negative) || (!is_left_value_abs_larger && !(this->is_non_negative));
-		}
-		result.normalize();
+		rational result = *this;
+		result+=rhs;
 		return result;
 	}
 	
 	rational rational::operator-(const rational& rhs) const {
-		return (*this)+rational(!rhs.is_non_negative, rhs.numerator, rhs.denominator);
+		rational result = *this;
+		result-=rhs;
+		return result;
 	}
 	
 	rational rational::operator*(const rational& rhs) const {
-		return rational(this->is_non_negative == rhs.is_non_negative, this->numerator*rhs.numerator, this->denominator*rhs.denominator);
+		rational result = *this;
+		result*=rhs;
+		return result;
 	}
 	
 	rational rational::operator/(const rational& rhs) const {
-		if (rhs.numerator == 0) throw std::overflow_error("Overflow Error: Divison by Zero");
-		return (*this)*rational(rhs.is_non_negative, rhs.denominator, rhs.numerator);
+		rational result = *this;
+		result/=rhs;
+		return result;
 	}
 	
 	bool rational::operator==(const rational& rhs) const {
@@ -89,22 +83,41 @@ namespace dima {
 	}
 	
 	rational& rational::operator+=(const rational& rhs) {
-		*this = *this + rhs;
+		bool b = this->is_non_negative;
+		unsigned n = this->numerator;
+		unsigned d = this->denominator;
+		this->denominator = d * rhs.denominator;
+		
+		if (b == rhs.is_non_negative) {
+			this->numerator = n*rhs.denominator + rhs.numerator*d;
+		} else {
+			bool is_left_value_abs_larger = n*rhs.denominator > rhs.numerator*d;
+			this->numerator = is_left_value_abs_larger ? n*rhs.denominator - rhs.numerator*d : rhs.numerator*d - n*rhs.denominator;
+			this->is_non_negative = (is_left_value_abs_larger && b) || (!is_left_value_abs_larger && !b);
+		}
+		normalize();
 		return *this;
 	}
 	
 	rational& rational::operator-=(const rational& rhs) {
-		*this = *this - rhs;
+		*this += rational(!rhs.is_non_negative, rhs.numerator, rhs.denominator);
 		return *this;
 	}
 	
 	rational& rational::operator*=(const rational& rhs) {
-		*this = *this * rhs;
+		this->is_non_negative = this->is_non_negative == rhs.is_non_negative;
+		this->numerator = this->numerator*rhs.numerator;
+		this->denominator = this->denominator*rhs.denominator;
+		normalize();
 		return *this;
 	}
 	
 	rational& rational::operator/=(const rational& rhs) {
-		*this = *this / rhs;
+		if (rhs.numerator == 0) throw std::overflow_error("Overflow Error: Divison by Zero");
+		this->is_non_negative = this->is_non_negative == rhs.is_non_negative;
+		this->numerator = this->numerator*rhs.denominator;
+		this->denominator = this->denominator*rhs.numerator;
+		normalize();
 		return *this;
 	}
 	
