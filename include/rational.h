@@ -187,7 +187,7 @@ namespace dima {
 	};
 
     //! Returns string representation
-    extern std::string to_string(const rational& r);
+    std::string to_string(const rational& r);
 
 }
 
