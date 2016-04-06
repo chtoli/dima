@@ -19,7 +19,6 @@ public:
     //matrix
     template<typename T>
     void displayMatrix(dima::matrix<T> m);
-	
 protected:
 	//notify user about unsaved changes
 	//void closeEvent(QCloseEvent *event);
