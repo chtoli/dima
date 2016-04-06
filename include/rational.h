@@ -2,6 +2,7 @@
 #define RATIONAL_H
 
 #include <ostream>
+#include <regex>
 
 namespace dima {
 	
@@ -66,7 +67,7 @@ namespace dima {
 		 * \return the denominator of this rational number
 		 */ 
 		unsigned getDenominator() const;
-		
+
 		//! Addition between two rational numbers
 		/*!
 		 * \param rhs right hand side of the Operation
@@ -180,8 +181,14 @@ namespace dima {
 		 * \return the modified stream
 		 */ 
 		friend std::ostream& operator<< (std::ostream& os, const rational r);
+
+        //! Parse from String
+        void fromString(std::string s);
 	};
+
+    //! Returns string representation
+    extern std::string to_string(const rational& r);
 
 }
 
-#endif // RAIONAL_H
+#endif // RATIONAL_H
