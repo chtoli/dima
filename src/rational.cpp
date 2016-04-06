@@ -1,6 +1,8 @@
 #include "rational.h"
 #include "gcd_lcm.h"
 #include <stdexcept>
+#include <iostream>
+#include <sstream>
 
 namespace dima {
 	
@@ -25,27 +27,33 @@ namespace dima {
 	}
 	
 	rational rational::operator+(const rational& rhs) const {
-		rational result = *this;
-		result+=rhs;
+		rational result;
+		result.denominator = this->denominator * rhs.denominator;
+		
+		if (this->is_non_negative == rhs.is_non_negative) {
+			result.is_non_negative = this->is_non_negative;
+			result.numerator = this->numerator*rhs.denominator+rhs.numerator*(this->denominator);
+		} else {
+			bool is_left_value_abs_larger = this->numerator*rhs.denominator > rhs.numerator*(this->denominator);
+			unsigned num = is_left_value_abs_larger ? this->numerator*rhs.denominator-rhs.numerator*(this->denominator) : -this->numerator*rhs.denominator+rhs.numerator*(this->denominator);
+			result.numerator = num;
+			result.is_non_negative = (is_left_value_abs_larger && this->is_non_negative) || (!is_left_value_abs_larger && !(this->is_non_negative));
+		}
+		result.normalize();
 		return result;
 	}
 	
 	rational rational::operator-(const rational& rhs) const {
-		rational result = *this;
-		result-=rhs;
-		return result;
+		return (*this)+rational(!rhs.is_non_negative, rhs.numerator, rhs.denominator);
 	}
 	
 	rational rational::operator*(const rational& rhs) const {
-		rational result = *this;
-		result*=rhs;
-		return result;
+		return rational(this->is_non_negative == rhs.is_non_negative, this->numerator*rhs.numerator, this->denominator*rhs.denominator);
 	}
 	
 	rational rational::operator/(const rational& rhs) const {
-		rational result = *this;
-		result/=rhs;
-		return result;
+		if (rhs.numerator == 0) throw std::overflow_error("Overflow Error: Divison by Zero");
+		return (*this)*rational(rhs.is_non_negative, rhs.denominator, rhs.numerator);
 	}
 	
 	bool rational::operator==(const rational& rhs) const {
@@ -83,41 +91,22 @@ namespace dima {
 	}
 	
 	rational& rational::operator+=(const rational& rhs) {
-		bool b = this->is_non_negative;
-		unsigned n = this->numerator;
-		unsigned d = this->denominator;
-		this->denominator = d * rhs.denominator;
-		
-		if (b == rhs.is_non_negative) {
-			this->numerator = n*rhs.denominator + rhs.numerator*d;
-		} else {
-			bool is_left_value_abs_larger = n*rhs.denominator > rhs.numerator*d;
-			this->numerator = is_left_value_abs_larger ? n*rhs.denominator - rhs.numerator*d : rhs.numerator*d - n*rhs.denominator;
-			this->is_non_negative = (is_left_value_abs_larger && b) || (!is_left_value_abs_larger && !b);
-		}
-		normalize();
+		*this = *this + rhs;
 		return *this;
 	}
 	
 	rational& rational::operator-=(const rational& rhs) {
-		*this += rational(!rhs.is_non_negative, rhs.numerator, rhs.denominator);
+		*this = *this - rhs;
 		return *this;
 	}
 	
 	rational& rational::operator*=(const rational& rhs) {
-		this->is_non_negative = this->is_non_negative == rhs.is_non_negative;
-		this->numerator = this->numerator*rhs.numerator;
-		this->denominator = this->denominator*rhs.denominator;
-		normalize();
+		*this = *this * rhs;
 		return *this;
 	}
 	
 	rational& rational::operator/=(const rational& rhs) {
-		if (rhs.numerator == 0) throw std::overflow_error("Overflow Error: Divison by Zero");
-		this->is_non_negative = this->is_non_negative == rhs.is_non_negative;
-		this->numerator = this->numerator*rhs.denominator;
-		this->denominator = this->denominator*rhs.numerator;
-		normalize();
+		*this = *this / rhs;
 		return *this;
 	}
 	
@@ -149,18 +138,6 @@ namespace dima {
 		return *this;
 	}
 	
-	rational rational::operator++(int i) {
-		rational result(*this);
-		(*this)++;
-		return result;
-	}
-	
-	rational rational::operator--(int i) {
-		rational result(*this);
-		(*this)--;
-		return result;
-	}
-	
 	unsigned rational::getNumerator() const { return numerator; }
 	
 	unsigned rational::getDenominator() const { return denominator; }
@@ -170,6 +147,31 @@ namespace dima {
 		else os << (r.is_non_negative ? "" : "-") << r.numerator << "/" << r.denominator;
 		return os;
 	}
+
+
+    void rational::fromString(std::string s) {
+        const std::regex frac_regex ("^([+-]?)([0-9]+)/?([0-9]+)?");
+        std::smatch sm;
+
+        if (std::regex_search(s, sm, frac_regex)) {
+            bool non_neg = true;
+            if (sm[1].compare("-") == 0) {
+                non_neg = false;
+            }
+            this->is_non_negative = non_neg;
+            this->numerator = std::stoul(sm[2]);
+            if (sm[3].compare("") != 0) {
+                this->denominator = std::stoul(sm[3]);
+                this->normalize();
+            }
+        }
+    }
+
+    std::string to_string(const rational& r) {
+        std::stringstream ss;
+        ss << r;
+        return ss.str();
+    }
 	
 }
 
