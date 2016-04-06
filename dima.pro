@@ -9,7 +9,6 @@ unix:OBJECTS_DIR = "./bin"
 VPATH += ./include
 VPATH += ./src
 
-#HEADERS += "/home/sycx2/Dropbox/Wimat2/Github/dima-master/include"
 
 HEADERS += "./include/rational.h"
 HEADERS += "./include/is_unit_inv.h"
@@ -20,9 +19,7 @@ HEADERS += "./include/matrix.h"
 HEADERS += "./include/MatrixModel.h"
 HEADERS += "./include/mainwindow.h"
 
-#SOURCES += "/home/sycx2/Dropbox/Wimat2/Github/dima-master/src"
-
-SOURCES += "/home/sycx2/Dropbox/Wimat2/Github/dima-master/main.cpp"
+SOURCES += "./main.cpp"
 SOURCES += "./src/rational.cpp"
 SOURCES += "./src/is_unit_inv.cpp"
 SOURCES += "./src/gcd_lcm.cpp"
