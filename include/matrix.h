@@ -1,9 +1,10 @@
 #ifndef matrix_H
 #define matrix_H
-
 #include <iostream>
 #include <exception>
 #include <vector>
+#include <sstream>
+#include <cmath>
 
 namespace dima {
 
@@ -85,7 +86,7 @@ namespace dima {
 		
 	
 		/******************************//*******
-		*		        Functions              *
+		*								Functions							 *
 		***************************************/
 		//! Removes the i-th row
 		void remove_row(const size_t& i);
@@ -96,15 +97,15 @@ namespace dima {
 		//! Returns a new matrix without the i-th row and j-th column
 		template<typename S>
 		friend matrix<S> submatrix(const matrix<S>& m, const size_t& i, const size_t& j);
-		//! invert the matrix
-		void invert();
-		//! transpose the matrix
-		void transpose();
+		//! returns the inverse of a square matrix
+		matrix<T> invert();
+		//! returns the transposed matrix
+		matrix<T> transpose();
 		//! returns the adjunct matrix
-		// adjunct();
+		matrix<T> adjunct();
 	};	
 	
-	//Constructor
+	
 	template<typename T>
 	matrix<T>::matrix(size_t n): rows(n), columns(n) {
 		data.resize(rows*columns);
@@ -157,12 +158,11 @@ namespace dima {
 		return *this;
 	}
 	
-	//Destructor
 	template<typename T>
 	matrix<T>::~matrix() {}
 
 	/**************************************
-	*		        Operators   	      *
+	*								Operators							*
 	***************************************/
 	
 	//!binary bracket operator to access matrix A's entry in i-th row and j-th column with A(i,j)
@@ -260,9 +260,9 @@ namespace dima {
 	}
 	
 	/******************************//*******
-	*		Functions	       *
+	*								Functions							 *
 	***************************************/
-	//removes the given index's column
+	//! removes the given index's column
 	template<typename T>
 	void matrix<T>::remove_column(const size_t& deleted_column) {
 		size_t new_size = rows*(columns-1);
@@ -274,7 +274,7 @@ namespace dima {
 		data.resize(new_size);
 	}
 	
-	//removes the given index's row	
+	//! removes the given index's row	
 	template<typename T>
 	void matrix<T>::remove_row(const size_t& deleted_row) {
 		size_t new_size = (rows-1)*columns;
@@ -285,14 +285,14 @@ namespace dima {
 		data.resize(new_size);
 	}
 	
-	//removes the given index's row and column;	
+	//! removes the given index's row and column;	
 	template<typename T>
 	void matrix<T>::remove(const size_t& i, const size_t& j) {
 		this->remove_row(i);
 		this->remove_column(j);
 	}
 	
-	//returns the submatrix with i-th row and j-th column deleted (needed for det)
+	//! returns the submatrix with i-th row and j-th column deleted (needed for det)
 	template<typename T>
 	matrix<T> submatrix(const matrix<T>& m, const size_t& i, const size_t& j) {
 		matrix<T> result(m);
