@@ -46,8 +46,6 @@ QVariant MatrixModel<T>::data(const QModelIndex& index, int role) const {
     std::cout << "data method called";
     if (!index.isValid() || role != Qt::DisplayRole)
         return QVariant();
-
-    qDebug() << QString::number(m(index.row(), index.column()));
     //return the data to which the index points
     return QString::number(m(index.row(), index.column()));
 }
