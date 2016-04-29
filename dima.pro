@@ -6,8 +6,8 @@ QMAKE_CXXFLAGS += -std=c++11
 unix:INCLUDEPATH += "./include"
 unix:OBJECTS_DIR = "./bin"
 
-VPATH += ./include
-VPATH += ./src
+VPATH += /include
+VPATH += /src
 
 
 HEADERS += "./include/rational.h"
