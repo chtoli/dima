@@ -1,4 +1,4 @@
- #ifndef POLYNOMIAL_H
+#ifndef POLYNOMIAL_H
 #define POLYNOMIAL_H
 
 #include <ostream>
@@ -58,6 +58,74 @@ namespace dima {
 		polynomial operator++(int);
 		//! Postfix decrement operator
 		polynomial operator--(int);
+		
+		//! Addition between two polynomials
+		/*!
+		 * \param rhs right hand side of the Operation
+		 * \return this+rhs
+		*/
+		polynomial operator+(const polynomial& rhs) const;
+		
+		//! Subtraction between two polynomials
+		/*!
+		 * \param rhs right hand side of the Operation
+		 * \return this-rhs
+		*/
+		polynomial operator-(const polynomial& rhs) const;
+		//! Multiplikation between two polynomials
+		/*!
+		 * \param rhs right hand side of the Operation
+		 * \return this*rhs
+		*/
+		polynomial operator*(const polynomial& rhs) const;
+		//! Divison between two polynomials
+		/*!
+		 * \param rhs right hand side of the Operation
+		 * \return the quotient q, if this = q*rhs+r with deg(r) < deg(q)
+		*/
+		polynomial operator/(const polynomial& rhs) const;
+		
+		//! Modulo Operation
+		/*!
+		 * \param rhs right hand side of the Operation
+		 * \return the remainder r of divison by rhs
+		*/
+		polynomial operator%(const polynomial& rhs) const;
+		
+		//Assignment Operator
+		/*!
+		 * \param rhs the value, which is added to *this
+		 * \return *this
+		*/
+		polynomial& operator+=(const polynomial& rhs);
+		
+		//Assignment Operator
+		/*!
+		 * \param rhs the value, which is subtracted from *this
+		 * \return *this
+		*/
+		polynomial& operator-=(const polynomial& rhs);
+		
+		//Assignment Operator
+		/*!
+		 * \param rhs the value, by which *this is multiplied
+		 * \return *this
+		*/
+		polynomial& operator*=(const polynomial& rhs);
+		
+		//Assignment Operator
+		/*!
+		 * \param rhs the value, by which *this is divided
+		 * \return *this
+		*/
+		polynomial& operator/=(const polynomial& rhs);
+		
+		//Assignment Operator
+		/*!
+		 * \param rhs the value, by which *this is reduced
+		 * \return *this
+		*/
+		polynomial& operator%=(const polynomial& rhs);
 		
 		//! Sets the displayed variable for this polynomial (default: X)
 		void setC(char);
