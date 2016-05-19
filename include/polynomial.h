@@ -77,7 +77,29 @@ namespace dima {
 		 * \param rhs right hand side of the Operation
 		 * \return this*rhs
 		*/
-		polynomial operator*(const polynomial& rhs) const;
+		polynomial operator*(const polynomial& rhs){
+			std::vector<T> productCoef;
+
+			if(this->deg() <= rhs.deg()){
+	        		for(int i = (rhs.deg() + this->deg() + 1); i > -1; i--){
+	                    		T coef = 0;
+	
+	                    		for(int j = 0; j < rhs.deg() + 1; j++){
+	                			for(int k = 0; k < this->deg() + 1; k++){
+	                            			if(i == k + j){
+	                                			coef += longPoly(j) + shortPoly(k)
+	                            			}
+	                        		}
+	                    		}
+	
+	                    		productCoef.push_back(coef);
+	                	}
+			}else{
+	                	return rhs * this;
+			}
+
+			return new polynomial(productCoef);
+		}
 		//! Divison between two polynomials
 		/*!
 		 * \param rhs right hand side of the Operation
