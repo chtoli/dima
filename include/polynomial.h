@@ -77,7 +77,7 @@ namespace dima {
 		 * \param rhs right hand side of the Operation
 		 * \return this*rhs
 		*/
-		polynomial operator*(const polynomial& rhs){
+		polynomial operator*(const polynomial& rhs) const {
 			std::vector<T> productCoef;
 
 			if(this->deg() <= rhs.deg()){
