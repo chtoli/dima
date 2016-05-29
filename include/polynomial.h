@@ -200,10 +200,10 @@ namespace dima {
                    		}
 	                    	productCoef.push_back(coef);
 	                	}
-			} else {
-	                	return rhs * this;
-			}
-			return new polynomial(productCoef);	
+		} else {
+			return rhs * this;
+		}
+		return new polynomial(productCoef);	
 	}
 }
 #endif
