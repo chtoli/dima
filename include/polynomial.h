@@ -77,29 +77,7 @@ namespace dima {
 		 * \param rhs right hand side of the Operation
 		 * \return this*rhs
 		*/
-		polynomial operator*(const polynomial& rhs) const {
-			std::vector<T> productCoef;
-
-			if(this->deg() <= rhs.deg()){
-	        		for(int i = (rhs.deg() + this->deg() + 1); i > -1; i--){
-	                    		T coef = 0;
-	
-	                    		for(int j = 0; j < rhs.deg() + 1; j++){
-	                			for(int k = 0; k < this->deg() + 1; k++){
-	                            			if(i == k + j){
-	                                			coef += longPoly(j) + shortPoly(k)
-	                            			}
-	                        		}
-	                    		}
-	
-	                    		productCoef.push_back(coef);
-	                	}
-			}else{
-	                	return rhs * this;
-			}
-
-			return new polynomial(productCoef);
-		}
+		polynomial operator*(const polynomial& rhs);
 		//! Divison between two polynomials
 		/*!
 		 * \param rhs right hand side of the Operation
@@ -205,6 +183,27 @@ namespace dima {
 		std::vector<T> p(deg(*this)+1);
 		for (size_t i = 0; i < p.size(); i++) p[i] = -(this->data[i]);
 		return p;
+	}
+	
+	template <typename T>
+	polynomial<T> polynomial<T>::operator*(const polynomial& rhs) const {
+		std::vector<T> productCoef;
+		if(this->deg() <= rhs.deg()){
+	        	for(int i = (rhs.deg() + this->deg() + 1); i > -1; i--){
+	        		T coef = 0;
+	                    	for(int j = 0; j < rhs.deg() + 1; j++){
+	                		for(int k = 0; k < this->deg() + 1; k++){
+	                       			if(i == k + j){
+		                     			coef += longPoly(j) + shortPoly(k)
+	                       			}
+	                      		}
+                   		}
+	                    	productCoef.push_back(coef);
+	                	}
+			} else {
+	                	return rhs * this;
+			}
+			return new polynomial(productCoef);	
 	}
 }
 #endif
