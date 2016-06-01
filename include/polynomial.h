@@ -194,7 +194,7 @@ namespace dima {
 	                    	for(int j = 0; j < rhs.deg() + 1; j++){
 	                		for(int k = 0; k < this->deg() + 1; k++){
 	                       			if(i == k + j){
-		                     			coef += rhs(j) + this(k)
+		                     			coef += rhs(j) + this(k);
 	                       			}
 	                      		}
                    		}
