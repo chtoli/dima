@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <exception>
+#include <stdexcept>
 #include <vector>
 
 namespace dima {
