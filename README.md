@@ -5,7 +5,7 @@ dima is at the moment a Collection of Mathmatical Structures in C++. The aim of 
 unstable. 
 
 ##Installation
-Simply call make to build the code. ./dima will run it.
+Open the QTDima.pro file with Qt Creator and simply build it.
 
 ##Contributors
-Dennis Klein (sycx2), Christian Linz(chtoli)
+Dennis Klein (sycx2), deadUnicorn, Christian Linz(chtoli)
